@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{css/main.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
+</head>
+<body>
+<div id="body_wrapper">
+    <div id="wrapper">
+        <div id="menu">
+            <ul>
+                <li><a th:href="@{~/}" class="current">Главная</a></li>
+                <li><a th:href="@{~/appointment}">Запись</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_USER')||#request.isUserInRole('ROLE_ADMIN')||#request.isUserInRole('ROLE_WORKER')}"><a href="/logout">Выйти</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/registration}">Регистрация</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/authentication}">Авторизация</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a th:href="@{~/work}" class="last">Добавить работника</a></li>
+            </ul>
+        </div>
+
+        <form id="registration" action="/" method="post" th:action="@{/work}" th:object="${worker}">
+            <h1>Регистрация</h1>
+            <div th:if="${param.error}" class="error">
+                Почта уже занята
+            </div>
+            <fieldset id="inputs">
+                <input th:field="*{lastName}" id="lastName" type="text" placeholder="Фамилия" autofocus>
+                <small th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">lmao</small>
+                <input th:field="*{firstName}" id="firstName" type="text" placeholder="Имя">
+                <small th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
+                <input th:field="*{patronymic}" id="patronymic" type="text" placeholder="Имя">
+                <small th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"/>
+                <input th:field="*{phone}" id="phone" type="text" placeholder="Телефон">
+                <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"/>
+                <input th:field="*{email}" id="email" type="text" placeholder="Электронная почта">
+                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"/>
+            </fieldset>
+            <fieldset id="actions">
+                <input type="submit" id="submit" value="Регистрация">
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

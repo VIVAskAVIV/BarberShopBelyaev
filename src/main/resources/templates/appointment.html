@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись в парикмахерскую</title>
+    <link rel="stylesheet" th:href="@{css/main.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
+</head>
+<body>
+<div id="body_wrapper">
+    <div id="wrapper">
+        <div id="menu">
+            <ul>
+                <li><a th:href="@{~/}" class="current">Главная</a></li>
+                <li><a th:href="@{~/appointment}">Запись</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_USER')||#request.isUserInRole('ROLE_ADMIN')||#request.isUserInRole('ROLE_WORKER')}"><a href="/logout">Выйти</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/registration}">Регистрация</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/authentication}">Авторизация</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a th:href="@{~/work}" class="last">Добавить работника</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+            <form id = "login" action="#" method="get" th:action="@{add}">
+                <h1>Выберете дату записи</h1>
+                <fieldset id="inputs">
+                    <h3>Выберите дату:</h3>
+                    <input th:value="${date}" name="date" id="date" type="date" placeholder="" autofocus required>
+                </fieldset>
+                <fieldset id="actions">
+                    <input type="submit" id="submit" value="Далее">
+                </fieldset>
+            </form>
+
+    <div class="cleaner"></div>
+</div>
+</body>
+</html>

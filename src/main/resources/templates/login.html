@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" th:href="@{css/main.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
+</head>
+<body>
+<div id="body_wrapper">
+    <div id="wrapper">
+        <div id="menu">
+            <ul>
+                <li><a th:href="@{~/}" class="current">Главная</a></li>
+                <li><a th:href="@{~/appointment}">Запись</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_USER')||#request.isUserInRole('ROLE_ADMIN')||#request.isUserInRole('ROLE_WORKER')}"><a href="/logout">Выйти</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/registration}">Регистрация</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/authentication}">Авторизация</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a th:href="@{~/work}" class="last">Добавить работника</a></li>
+            </ul>
+        </div>
+
+        <form id="login" action="#" method="post" th:action="@{/login}" th:object="${user}">
+            <h1>Форма входа</h1>
+            <div th:if="${param.error}" class="error">
+                Неправильная почта или пароль, попробуйте снова
+            </div>
+            <fieldset id="inputs">
+                <input th:field="*{username}" id="username" type="text" placeholder="Электронная почта" autofocus required>
+                <input th:field="*{password}" id="password" type="password" placeholder="Пароль" required>
+            </fieldset>
+            <fieldset id="actions">
+                <input type="submit" id="submit" value="ВОЙТИ">
+                <a th:href="@{~/registration}">Регистрация</a>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

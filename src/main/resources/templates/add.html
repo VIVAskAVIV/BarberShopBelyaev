@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись в парикмахерскую</title>
+    <link rel="stylesheet" th:href="@{css/main.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
+</head>
+<body>
+<div id="body_wrapper">
+    <div id="wrapper">
+        <div id="menu">
+            <ul>
+                <li><a th:href="@{~/}" class="current">Главная</a></li>
+                <li><a th:href="@{~/appointment}">Запись</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_USER')||#request.isUserInRole('ROLE_ADMIN')||#request.isUserInRole('ROLE_WORKER')}"><a href="/logout">Выйти</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/registration}">Регистрация</a></li>
+                <li th:if="${!#request.isUserInRole('ROLE_USER')&&!#request.isUserInRole('ROLE_ADMIN')&&!#request.isUserInRole('ROLE_WORKER')}"><a th:href="@{~/authentication}">Авторизация</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a th:href="@{~/work}" class="last">Добавить работника</a></li>
+            </ul>
+        </div>
+
+        <div id="main">
+            <div>
+                <div>
+                    <table align="center">
+                        <tr>
+                            <td></td>
+                            <td th:each="id : ${workers}" th:text="${id.getName()}"></td>
+                        </tr>
+                        <tr th:each="i : ${#numbers.sequence( 10, 18, 1)}">
+                            <td th:text="${i}+':00'"></td>
+                            <div th:each="worker : ${workers}" th:with="app = ${T(belyaev.ai182.barbershop.FindAnyAppointment).findAnyMatch(appointment,i,worker.getWorkerId())}">
+                                <td th:if="${#request.isUserInRole('ROLE_USER')}">
+                                    <form th:if="${app}==null" id="app_add" action="#" method="post" th:action="@{~/appointment_add(time=${i},date=${param.date},worker=${worker.getWorkerId()})}">
+                                        <input type="submit" id="add-app-submit" value="Запись">
+                                    </form>
+                                    <small th:if="${app}!=null" th:text="${app.getUser().getName()}"></small>
+                                </td>
+
+                                <td th:if="${!#request.isUserInRole('ROLE_USER')}">
+                                    <small th:if="${app}==null" th:text="Свободно"></small>
+                                    <form th:if="${app}!=null" id="app_del" action="#" method="post" th:action="@{~/appointment_delete(time=${i},date=${param.date},worker=${worker.getWorkerId()})}">
+                                        <input type="submit" th:value="${app.getUser().getName()}">
+                                    </form>
+                                </td>
+
+                            </div>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <form id="add-app" action="#" method="get" th:action="@{add}">
+                        <h1>Поменять дату записи</h1>
+                        <fieldset id="inputs">
+                            <h3>Выберите дату:</h3>
+                            <input th:value="${date}" name="date" id="date" type="date" placeholder="" autofocus required>
+                        </fieldset>
+                        <fieldset id="actions">
+                            <input class="left" type="submit" id="submit" value="Далее">
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="cleaner"></div>
+            </div>
+        </div>
+
+    <div class="cleaner"></div>
+    </div>
+</div>
+</body>
+</html>
