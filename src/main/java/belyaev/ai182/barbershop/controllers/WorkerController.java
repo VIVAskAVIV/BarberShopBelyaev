@@ -35,7 +35,6 @@ public class WorkerController {
             return "work";
         }
         service.addWorker(worker);
-        userService.setWorker(worker.getEmail());
         return "redirect:/";
     }
 

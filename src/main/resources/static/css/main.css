@@ -8,6 +8,17 @@ body {
     background: url(../images/bg.png) repeat;
 }
 
+#main {
+    clear: both;
+    width: 940px;
+    padding: 30px 0;
+}
+
+#main p {
+    margin-bottom: 10px
+}
+
+
 a, a:link, a:visited { color: #3d8e7d; font-weight: normal; text-decoration: underline; font-size: 12px }
 a:hover { text-decoration: none; }
 
@@ -96,7 +107,7 @@ h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
 #menu ul li a {
     float: left;
     display: block;
-    width: 130px;
+    width: 180px;
     height: 33px;
     padding: 7px 0 0 0;
     font-size: 14px;
@@ -118,6 +129,8 @@ h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
 
 #menu ul .last { background: none }
 
+#mid_title { font-size: 34px; font-weight: 400; margin-bottom: 30px }
+
 #main {
     clear: both;
     width: 940px;
@@ -128,6 +141,15 @@ h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
 #main p {
     margin-bottom: 10px
 }
+
+
+#middle p {
+    font-size: 18px;
+    color: #666;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+#middle img { float: right; margin-left: 60px }
 
 .col_w620 { width: 600px; padding-right: 20px; }
 

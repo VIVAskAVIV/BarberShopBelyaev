@@ -47,20 +47,6 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void setAdmin(String email) {
-        User user = userRepository.findByEmail(email);
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_ADMIN")));
-        userRepository.save(user);
-    }
-
-    public void setWorker(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            user.setRoles(Collections.singleton(new Role(1L, "ROLE_WORKER")));
-            userRepository.save(user);
-        }
-    }
-
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
