@@ -26,7 +26,7 @@ public class AppointmentController {
 
     @GetMapping("/appointment")
     public String appointment() {
-        return "/appointment";
+        return "appointment";
     }
 
     @GetMapping("/add")
@@ -34,7 +34,7 @@ public class AppointmentController {
                                  Model model) {
         model.addAttribute("workers", workerService.findAll());
         model.addAttribute("appointment", appointmentService.findByDate(date));
-        return "/add";
+        return "add";
     }
 
     @PostMapping("/appointment_add")
