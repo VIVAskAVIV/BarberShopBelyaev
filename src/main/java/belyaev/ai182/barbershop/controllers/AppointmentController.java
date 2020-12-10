@@ -29,12 +29,12 @@ public class AppointmentController {
         return "/appointment";
     }
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String getAppointment(@RequestParam("date") String date,
                                  Model model) {
         model.addAttribute("workers", workerService.findAll());
         model.addAttribute("appointment", appointmentService.findByDate(date));
-        return "add";
+        return "/add";
     }
 
     @PostMapping("/appointment_add")
