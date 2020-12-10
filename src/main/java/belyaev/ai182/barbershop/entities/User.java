@@ -34,7 +34,7 @@ public class User  implements UserDetails{
     private String email;
 
     @Pattern(regexp = "[0-9]{10}",
-            message = "Неправильный номер телефона")
+            message = "Неправильный номер телефона(пример - 0951112233)")
     private String phone;
 
     @Size(min = 5, message = "Пароль должен содержать минимум 5 символов")
